@@ -1,14 +1,143 @@
+/* ========================================
+   PHISHGUARD — DESIGN TOKENS
+   Dark is the default. Light applies when the
+   user chooses it, or when the OS prefers light
+   and no explicit choice has been saved.
+   ======================================== */
 
 :root {
+    color-scheme: dark;
+
+    /* Typography: terminal-style monospace for UI, readable sans-serif for prose. */
+    --font-mono: "JetBrains Mono", "IBM Plex Mono", ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+    --font-body: Inter, system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+
     --bg: #080d18;
     --sidebar: #0c1423;
     --panel: #111c2d;
     --panel-hover: #17253a;
+    --surface-inset: #080d18;
+    --surface-raised: #172235;
+    --surface-hover: #23344b;
+    --nav-active: #142b41;
+
     --border: #26354b;
+    --border-strong: #56708f;
+
     --text: #e5edf7;
     --muted: #91a1b7;
-    --blue: #38bdf8;
+
+    --accent: #38bdf8;
+    --accent-fill: #22d3ee;
+    --accent-fill-hover: #67e8f9;
+    --on-accent: #04111d;
     --green: #34d399;
+
+    --focus: #7dd3fc;
+    --focus-ring: rgba(56, 189, 248, 0.25);
+
+    --danger-text: #fda4af;
+    --danger-bg: #351b27;
+    --danger-border: #713044;
+    --danger-hover-bg: #7f263b;
+    --danger-hover-text: #fff1f2;
+
+    --risk-low-text: #6ee7b7;
+    --risk-low-bg: #06463655;
+    --risk-medium-text: #fcd34d;
+    --risk-medium-bg: #854d0e55;
+    --risk-high-text: #fca5a5;
+    --risk-high-bg: #7f1d1d55;
+    --risk-critical-text: #fecaca;
+    --risk-critical-bg: #991b1b99;
+}
+
+:root[data-theme="light"] {
+    color-scheme: light;
+
+    --bg: #f3f6fa;
+    --sidebar: #ffffff;
+    --panel: #ffffff;
+    --panel-hover: #f1f5f9;
+    --surface-inset: #f8fafc;
+    --surface-raised: #eef3f9;
+    --surface-hover: #e2e8f0;
+    --nav-active: #e0f2fe;
+
+    --border: #d6dee9;
+    --border-strong: #8593a8;
+
+    --text: #0f1b2d;
+    --muted: #4a5a70;
+
+    --accent: #0369a1;
+    --accent-fill: #0369a1;
+    --accent-fill-hover: #075985;
+    --on-accent: #ffffff;
+    --green: #047857;
+
+    --focus: #0369a1;
+    --focus-ring: rgba(3, 105, 161, 0.25);
+
+    --danger-text: #b91c1c;
+    --danger-bg: #fef2f2;
+    --danger-border: #fca5a5;
+    --danger-hover-bg: #fee2e2;
+    --danger-hover-text: #7f1d1d;
+
+    --risk-low-text: #065f46;
+    --risk-low-bg: #d1fae5;
+    --risk-medium-text: #92400e;
+    --risk-medium-bg: #fef3c7;
+    --risk-high-text: #991b1b;
+    --risk-high-bg: #fee2e2;
+    --risk-critical-text: #ffffff;
+    --risk-critical-bg: #7f1d1d;
+}
+
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) {
+        color-scheme: light;
+
+        --bg: #f3f6fa;
+        --sidebar: #ffffff;
+        --panel: #ffffff;
+        --panel-hover: #f1f5f9;
+        --surface-inset: #f8fafc;
+        --surface-raised: #eef3f9;
+        --surface-hover: #e2e8f0;
+        --nav-active: #e0f2fe;
+
+        --border: #d6dee9;
+        --border-strong: #8593a8;
+
+        --text: #0f1b2d;
+        --muted: #4a5a70;
+
+        --accent: #0369a1;
+        --accent-fill: #0369a1;
+        --accent-fill-hover: #075985;
+        --on-accent: #ffffff;
+        --green: #047857;
+
+        --focus: #0369a1;
+        --focus-ring: rgba(3, 105, 161, 0.25);
+
+        --danger-text: #b91c1c;
+        --danger-bg: #fef2f2;
+        --danger-border: #fca5a5;
+        --danger-hover-bg: #fee2e2;
+        --danger-hover-text: #7f1d1d;
+
+        --risk-low-text: #065f46;
+        --risk-low-bg: #d1fae5;
+        --risk-medium-text: #92400e;
+        --risk-medium-bg: #fef3c7;
+        --risk-high-text: #991b1b;
+        --risk-high-bg: #fee2e2;
+        --risk-critical-text: #ffffff;
+        --risk-critical-bg: #7f1d1d;
+    }
 }
 
 * {
@@ -20,13 +149,18 @@ body {
     min-height: 100vh;
     background: var(--bg);
     color: var(--text);
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: var(--font-body);
     font-size: 14px;
 }
 
 a {
     color: inherit;
     text-decoration: none;
+}
+
+:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
 }
 
 .app-layout {
@@ -44,6 +178,10 @@ a {
     border-right: 1px solid var(--border);
 }
 
+.sidebar-top {
+    display: block;
+}
+
 .brand {
     margin: 0 0 48px 8px;
     font-size: 25px;
@@ -52,12 +190,12 @@ a {
 }
 
 .brand span {
-    color: var(--blue);
+    color: var(--accent);
 }
 
 .nav-label,
 .eyebrow {
-    color: var(--blue);
+    color: var(--accent);
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 2px;
@@ -81,12 +219,12 @@ a {
 
 .nav-link:hover,
 .nav-link.active {
-    background: #142b41;
-    color: var(--blue);
+    background: var(--nav-active);
+    color: var(--accent);
 }
 
 .nav-link.active {
-    border-left: 3px solid var(--blue);
+    border-left: 3px solid var(--accent);
 }
 
 .sidebar-footer {
@@ -105,7 +243,6 @@ a {
     flex-shrink: 0;
     border-radius: 50%;
     background: var(--green);
-    box-shadow: 0 0 10px #34d39955;
 }
 
 .main-content {
@@ -119,12 +256,21 @@ a {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    flex-wrap: wrap;
+    gap: 12px 16px;
     border-bottom: 1px solid var(--border);
 }
 
 .topbar p {
+    margin: 0;
     color: var(--muted);
+}
+
+.topbar-actions {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 14px;
 }
 
 .system-status {
@@ -132,6 +278,51 @@ a {
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 1px;
+}
+
+/* Theme toggle: the icon and label describe the action it will perform. */
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 40px;
+    padding: 8px 12px;
+    border: 1px solid var(--border-strong);
+    border-radius: 8px;
+    background: var(--surface-raised);
+    color: var(--text);
+    font: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+
+.theme-toggle:hover {
+    background: var(--surface-hover);
+}
+
+/* Dark is the default, so the button shows a sun (switch to light). */
+.theme-toggle .icon-moon {
+    display: none;
+}
+
+:root[data-theme="light"] .theme-toggle .icon-sun {
+    display: none;
+}
+
+:root[data-theme="light"] .theme-toggle .icon-moon {
+    display: block;
+}
+
+@media (prefers-color-scheme: light) {
+    :root:not([data-theme="dark"]) .theme-toggle .icon-sun {
+        display: none;
+    }
+
+    :root:not([data-theme="dark"]) .theme-toggle .icon-moon {
+        display: block;
+    }
 }
 
 .page-heading {
@@ -212,16 +403,6 @@ a {
     line-height: 1.6;
 }
 
-.demo-badge {
-    padding: 7px 10px;
-    border: 1px solid #38516a;
-    border-radius: 6px;
-    color: var(--blue);
-    font-size: 10px;
-    font-weight: 700;
-    white-space: nowrap;
-}
-
 .table-wrapper {
     overflow-x: auto;
 }
@@ -267,19 +448,24 @@ tbody tr:hover {
     font-weight: 700;
 }
 
-.risk.high {
-    background: #7f1d1d55;
-    color: #fca5a5;
+.risk.low {
+    background: var(--risk-low-bg);
+    color: var(--risk-low-text);
 }
 
 .risk.medium {
-    background: #854d0e55;
-    color: #fcd34d;
+    background: var(--risk-medium-bg);
+    color: var(--risk-medium-text);
 }
 
-.risk.low {
-    background: #065f4655;
-    color: #6ee7b7;
+.risk.high {
+    background: var(--risk-high-bg);
+    color: var(--risk-high-text);
+}
+
+.risk.critical {
+    background: var(--risk-critical-bg);
+    color: var(--risk-critical-text);
 }
 
 .quick-actions {
@@ -295,31 +481,112 @@ tbody tr:hover {
     gap: 10px;
 }
 
+/* Button system
+   Variants: .primary, .secondary, .terminal, .danger
+   States: hover, active, focus-visible, disabled, is-loading */
+
 .action-button {
-    display: inline-block;
-    padding: 12px 16px;
-    border-radius: 8px;
-    font-weight: 700;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 10px 18px;
+    border: 1px solid transparent;
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
     text-align: center;
-    transition: background 0.2s;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+        background-color 0.15s ease,
+        border-color 0.15s ease,
+        color 0.15s ease,
+        transform 0.1s ease;
+}
+
+.action-button:hover:not(:disabled) {
+    transform: translateY(-1px);
+}
+
+.action-button:active:not(:disabled) {
+    transform: translateY(0);
 }
 
 .action-button.primary {
-    background: #0284c7;
-    color: white;
+    background: var(--accent-fill);
+    border-color: var(--accent-fill);
+    color: var(--on-accent);
 }
 
-.action-button.primary:hover {
-    background: #0369a1;
+.action-button.primary:hover:not(:disabled) {
+    background: var(--accent-fill-hover);
+    border-color: var(--accent-fill-hover);
 }
 
 .action-button.secondary {
-    border: 1px solid var(--border);
-    background: #172235;
+    background: var(--surface-raised);
+    border-color: var(--border-strong);
+    color: var(--text);
 }
 
-.action-button.secondary:hover {
-    background: #23344b;
+.action-button.secondary:hover:not(:disabled) {
+    background: var(--surface-hover);
+}
+
+/* Command-style: a "$" prompt marks the action as a terminal command. */
+.action-button.terminal {
+    justify-content: flex-start;
+    background: transparent;
+    border-color: var(--border-strong);
+    color: var(--accent);
+}
+
+.action-button.terminal::before {
+    content: "$";
+    color: var(--muted);
+    font-weight: 700;
+}
+
+.action-button.terminal:hover:not(:disabled) {
+    background: var(--nav-active);
+    border-color: var(--accent);
+}
+
+.action-button.danger {
+    background: var(--danger-bg);
+    border-color: var(--danger-border);
+    color: var(--danger-text);
+}
+
+.action-button.danger:hover:not(:disabled) {
+    background: var(--danger-hover-bg);
+    color: var(--danger-hover-text);
+}
+
+.action-button:disabled {
+    cursor: not-allowed;
+    opacity: 0.55;
+    transform: none;
+}
+
+.action-button.is-loading {
+    cursor: progress;
+}
+
+.action-button.is-loading::after {
+    content: "_";
+    animation: caret-blink 1s steps(2, start) infinite;
+}
+
+@keyframes caret-blink {
+    to {
+        visibility: hidden;
+    }
 }
 
 .footer {
@@ -398,7 +665,7 @@ tbody tr:hover {
     }
 
     .system-status {
-        font-size: 9px;
+        font-size: 11px;
     }
 
     .page-heading {
@@ -431,7 +698,7 @@ tbody tr:hover {
 }
 
 
-/* URL Analyzer */
+/* URL and Email Analyzer */
 
 .analyzer-panel form {
     display: flex;
@@ -444,20 +711,28 @@ tbody tr:hover {
     font-weight: 700;
 }
 
-.analyzer-panel input {
+.analyzer-panel input,
+.analyzer-panel textarea {
     width: 100%;
     padding: 15px;
-    border: 1px solid var(--border);
+    border: 1px solid var(--border-strong);
     border-radius: 8px;
     outline: none;
-    background: #080d18;
+    background: var(--surface-inset);
     color: var(--text);
     font: inherit;
 }
 
-.analyzer-panel input:focus {
-    border-color: var(--blue);
-    box-shadow: 0 0 0 3px #38bdf822;
+.analyzer-panel input:focus,
+.analyzer-panel textarea:focus {
+    border-color: var(--focus);
+    box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+.analyzer-panel textarea {
+    min-height: 220px;
+    resize: vertical;
+    line-height: 1.6;
 }
 
 .input-help,
@@ -480,31 +755,7 @@ tbody tr:hover {
 }
 
 .result-message:not(:empty) {
-    background: #172235;
-}
-
-.analyzer-panel button:disabled {
-    cursor: wait;
-    opacity: 0.65;
-}
-
-.analyzer-panel textarea {
-    width: 100%;
-    min-height: 220px;
-    padding: 15px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    outline: none;
-    resize: vertical;
-    background: #080d18;
-    color: var(--text);
-    font: inherit;
-    line-height: 1.6;
-}
-
-.analyzer-panel textarea:focus {
-    border-color: var(--blue);
-    box-shadow: 0 0 0 3px #38bdf822;
+    background: var(--surface-raised);
 }
 
 .analyzer-panel button:disabled {
@@ -513,108 +764,344 @@ tbody tr:hover {
 }
 
 
-/* ========================================
-   PHISHGUARD — ANALYSIS HISTORY BUTTONS
-   ======================================== */
+/* Analysis History buttons: shared .action-button styles, compact for table rows */
 
-/* Shared button foundation */
-#refresh-history,
-.delete-history-button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 9px;
-    min-height: 40px;
-    padding: 10px 16px;
-    border-radius: 8px;
-    font-family: inherit;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.2px;
-    cursor: pointer;
-    transition:
-        background 0.2s ease,
-        border-color 0.2s ease,
-        box-shadow 0.2s ease,
-        transform 0.2s ease,
-        color 0.2s ease;
-}
-
-/* Refresh button */
 #refresh-history {
     flex-shrink: 0;
-    color: #7dd3fc;
-    background: linear-gradient(135deg, #142c45, #102238);
-    border: 1px solid #285477;
-    box-shadow: 0 2px 8px #00000018;
 }
 
-#refresh-history:hover {
-    color: #e0f2fe;
-    background: linear-gradient(135deg, #16476b, #123654);
-    border-color: #38bdf8;
-    box-shadow: 0 0 16px #38bdf822;
-    transform: translateY(-1px);
-}
-
-#refresh-history:active {
-    transform: translateY(0);
-    box-shadow: none;
-}
-
-#refresh-history:focus-visible,
-.delete-history-button:focus-visible {
-    outline: 2px solid #7dd3fc;
-    outline-offset: 3px;
-}
-
-/* Refresh loading state */
-#refresh-history:disabled {
-    cursor: wait;
-    opacity: 0.65;
-    transform: none;
-    box-shadow: none;
-}
-
-/* Delete button */
 .delete-history-button {
-    min-height: 34px;
-    padding: 7px 12px;
-    color: #fda4af;
-    background: #351b27;
-    border: 1px solid #713044;
+    min-height: 36px;
+    padding: 6px 12px;
     font-size: 12px;
-}
-
-.delete-history-button:hover {
-    color: #fff1f2;
-    background: #7f263b;
-    border-color: #fb7185;
-    box-shadow: 0 0 12px #fb718522;
-    transform: translateY(-1px);
-}
-
-.delete-history-button:active {
-    background: #651b30;
-    transform: translateY(0);
-}
-
-.delete-history-button:disabled {
-    cursor: not-allowed;
-    opacity: 0.55;
-    transform: none;
-    box-shadow: none;
-}
-
-/* Respect reduced-motion preferences */
-@media (prefers-reduced-motion: reduce) {
-    #refresh-history,
-    .delete-history-button {
-        transition: none;
-    }
 }
 
 .button-icon {
     flex-shrink: 0;
     display: block;
+}
+
+
+/* Responsive navigation (mobile menu) */
+
+.nav-toggle {
+    display: none;
+}
+
+.nav-toggle .icon-close {
+    display: none;
+}
+
+.nav-link:focus-visible,
+.nav-toggle:focus-visible {
+    outline: 2px solid var(--focus);
+    outline-offset: 2px;
+}
+
+@media (max-width: 650px) {
+    .sidebar-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+    }
+
+    .sidebar-top .brand {
+        margin: 0;
+    }
+
+    .nav-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 44px;
+        min-width: 44px;
+        padding: 10px 14px;
+        border: 1px solid var(--border-strong);
+        border-radius: 8px;
+        background: var(--surface-raised);
+        color: var(--text);
+        font: inherit;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+
+    .nav-toggle:hover {
+        background: var(--surface-hover);
+    }
+
+    .sidebar.is-open .nav-toggle .icon-menu {
+        display: none;
+    }
+
+    .sidebar.is-open .nav-toggle .icon-close {
+        display: block;
+    }
+
+    /* Hide the menu only when JavaScript can reopen it. */
+    .js .sidebar:not(.is-open) .nav-label,
+    .js .sidebar:not(.is-open) .navigation,
+    .js .sidebar:not(.is-open) .sidebar-footer {
+        display: none;
+    }
+
+    .sidebar .nav-label {
+        margin: 20px 0 10px 8px;
+    }
+
+    .navigation {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .nav-link {
+        display: flex;
+        align-items: center;
+        min-height: 44px;
+        font-size: 14px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .nav-link,
+    .nav-toggle,
+    .theme-toggle,
+    #refresh-history,
+    .delete-history-button,
+    .action-button {
+        transition: none;
+    }
+}
+
+
+/* Live system status: text carries the meaning; color only reinforces it. */
+.system-status.is-down {
+    color: var(--danger-text);
+}
+
+
+/* Analysis results */
+
+.result-summary {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+    margin: 0 0 16px;
+}
+
+.result-summary > div {
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--panel);
+}
+
+.result-summary dt {
+    margin-bottom: 6px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.result-summary dd {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.result-message h2 {
+    margin: 0 0 12px;
+    font-size: 17px;
+}
+
+.result-message h3 {
+    margin: 18px 0 8px;
+    font-size: 14px;
+}
+
+.result-message p {
+    margin: 0 0 8px;
+}
+
+.result-message ul,
+.result-message ol {
+    margin: 0;
+    padding-left: 20px;
+}
+
+.result-message li {
+    margin-bottom: 6px;
+}
+
+.result-message[aria-busy="true"] {
+    opacity: 0.8;
+}
+
+.result-disclaimer {
+    margin-top: 16px;
+    color: var(--muted);
+    font-size: 12px;
+}
+
+.result-error {
+    color: var(--danger-text);
+    font-weight: 700;
+}
+
+.result-actions {
+    margin-top: 16px;
+}
+
+@media (max-width: 650px) {
+    .result-summary {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+
+/* Dashboard empty and error states */
+
+.dashboard-empty-text {
+    margin: 0 0 8px;
+    color: var(--muted);
+}
+
+.dashboard-empty-text + a {
+    color: var(--accent);
+    font-weight: 700;
+    text-decoration: underline;
+}
+
+
+/* Confirmation dialog (themed, keyboard accessible) */
+
+.confirm-dialog {
+    width: min(92vw, 440px);
+    padding: 24px;
+    border: 1px solid var(--border-strong);
+    border-radius: 12px;
+    background: var(--panel);
+    color: var(--text);
+}
+
+.confirm-dialog::backdrop {
+    background: rgba(3, 7, 15, 0.7);
+}
+
+.confirm-dialog h2 {
+    margin: 0 0 8px;
+    font-size: 17px;
+}
+
+.confirm-dialog p {
+    margin: 0 0 20px;
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+.confirm-dialog form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 10px;
+    margin: 0;
+}
+
+
+
+/* ========================================
+   TYPOGRAPHY SYSTEM
+   Monospace (--font-mono) for headings, navigation, buttons,
+   labels, statistics, risk levels, URLs and analysis values.
+   Sans-serif (--font-body) for descriptions and table text.
+   ======================================== */
+
+h1,
+h2,
+h3,
+.brand,
+.nav-link,
+.nav-label,
+.eyebrow,
+.theme-toggle,
+.nav-toggle,
+.system-status,
+.risk,
+.stat-card h2,
+.result-summary dd,
+.analyzer-panel label,
+.analyzer-panel input,
+.analyzer-panel textarea,
+th,
+.result-message h3,
+.confirm-dialog h2 {
+    font-family: var(--font-mono);
+}
+
+h1 {
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+}
+
+h2,
+h3 {
+    line-height: 1.3;
+}
+
+.nav-link {
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.eyebrow,
+.nav-label {
+    letter-spacing: 1.5px;
+}
+
+.risk {
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.stat-card h2 {
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.analyzer-panel label {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+}
+
+.analyzer-panel input,
+.analyzer-panel textarea {
+    font-size: 14px;
+}
+
+.analyzer-panel ::placeholder {
+    color: var(--muted);
+    opacity: 1;
+}
+
+.input-help,
+.method-description,
+.panel-heading p,
+.quick-actions p,
+.result-message p,
+td {
+    font-family: var(--font-body);
+}
+
+/* Reduced motion: keep color feedback, remove movement and blinking. */
+@media (prefers-reduced-motion: reduce) {
+    .action-button,
+    .action-button:hover:not(:disabled),
+    .action-button:active:not(:disabled) {
+        transform: none;
+    }
+
+    .action-button.is-loading::after {
+        animation: none;
+    }
 }

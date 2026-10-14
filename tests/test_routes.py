@@ -1,4 +1,18 @@
+import pytest
+
 from app import app
+from database import db
+
+
+@pytest.fixture(autouse=True)
+def isolated_database(tmp_path, monkeypatch):
+    """Keep route tests from writing into the app's real database."""
+    monkeypatch.setattr(
+        db,
+        "DB_PATH",
+        tmp_path / "instance" / "test.db",
+    )
+    db.init_db()
 
 
 def test_homepage_loads():

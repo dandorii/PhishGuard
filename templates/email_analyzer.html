@@ -1,39 +1,9 @@
+{% extends "base.html" %}
+{% set active_page = "email" %}
+{% block title %}PhishGuard | Email Analyzer{% endblock %}
+{% block breadcrumb %}Email Analyzer{% endblock %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PhishGuard | Email Analyzer</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-    <div class="app-layout">
-        <aside class="sidebar">
-            <a class="brand" href="/">Phish<span>Guard</span></a>
-
-            <p class="nav-label">WORKSPACE</p>
-
-            <nav class="navigation">
-                <a class="nav-link" href="/">Dashboard</a>
-                <a class="nav-link" href="/url-analyzer">URL Analyzer</a>
-                <a class="nav-link active" href="/email-analyzer">Email Analyzer</a>
-                <a class="nav-link" href="/history">Analysis History</a>
-                <a class="nav-link" href="/methodology">Methodology</a>
-            </nav>
-
-            <div class="sidebar-footer">
-                <span class="status-dot"></span>
-                Development Mode
-            </div>
-        </aside>
-
-        <main class="main-content">
-            <header class="topbar">
-                <p>Security Operations / Email Analyzer</p>
-                <span class="system-status">● SYSTEM ONLINE</span>
-            </header>
-
+{% block content %}
             <section class="page-heading">
                 <p class="eyebrow">MESSAGE INVESTIGATION</p>
                 <h1>Email Analyzer</h1>
@@ -85,13 +55,4 @@
                     Results are heuristic indicators, not a definitive verdict.
                 </p>
             </section>
-
-            <footer class="footer">
-                PhishGuard · Educational cybersecurity project
-            </footer>
-        </main>
-    </div>
-
-    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-</body>
-</html>
+{% endblock %}
