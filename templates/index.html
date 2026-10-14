@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard | Security Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-layout">
+
+        <aside class="sidebar">
+            <a class="brand" href="/">
+                Phish<span>Guard</span>
+            </a>
+
+            <p class="nav-label">WORKSPACE</p>
+
+            <nav class="navigation">
+                <a class="nav-link active" href="/">Dashboard</a>
+                <a class="nav-link" href="/url-analyzer">URL Analyzer</a>
+                <a class="nav-link" href="/email-analyzer">Email Analyzer</a>
+                <a class="nav-link" href="/history">Analysis History</a>
+                <a class="nav-link" href="/methodology">Methodology</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <span class="status-dot"></span>
+                Development Mode
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <p>Security Operations / Overview</p>
+                <span class="system-status">● SYSTEM ONLINE</span>
+            </header>
+
+            <section class="page-heading">
+                <p class="eyebrow">THREAT MONITORING</p>
+                <h1>Security Dashboard</h1>
+                <p>Monitor phishing analysis activity from one workspace.</p>
+            </section>
+
+            <section class="stats-grid">
+                <article class="stat-card">
+                    <p>Total Scans</p>
+                    <h2 id="total-scans">—</h2>
+                    <span>All recorded analyses</span>
+                </article>
+
+                <article class="stat-card">
+                    <p>Suspicious Results</p>
+                    <h2 id="suspicious-results">—</h2>
+                    <span>Scores of 30 or higher</span>
+                </article>
+
+                <article class="stat-card">
+                    <p>High-Risk Results</p>
+                    <h2 id="high-risk-results">—</h2>
+                    <span>Scores of 60 or higher</span>
+                </article>
+            </section>
+
+            <section class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Recent Analysis Activity</h2>
+                        <p>Latest five analyses recorded by PhishGuard.</p>
+                    </div>
+                    <span class="system-status" id="dashboard-status"
+                          role="status" aria-live="polite">
+                        Loading...
+                    </span>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Type</th>
+                                <th>Date</th>
+                                <th>Result</th>
+                                <th>Risk Score</th>
+                                <th>Indicators</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-activity-body">
+                            <tr>
+                                <td colspan="6">Loading recent activity...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="panel quick-actions">
+                <div>
+                    <h2>Start an Analysis</h2>
+                    <p>Inspect suspicious URLs or email content without opening links.</p>
+                </div>
+                <div class="action-buttons">
+                    <a class="action-button primary" href="/url-analyzer">Analyze URL</a>
+                    <a class="action-button secondary" href="/email-analyzer">Analyze Email</a>
+                </div>
+            </section>
+
+            <footer class="footer">
+                PhishGuard · Educational cybersecurity project
+            </footer>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
+```

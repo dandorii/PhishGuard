@@ -1,0 +1,97 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard | Email Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <a class="brand" href="/">Phish<span>Guard</span></a>
+
+            <p class="nav-label">WORKSPACE</p>
+
+            <nav class="navigation">
+                <a class="nav-link" href="/">Dashboard</a>
+                <a class="nav-link" href="/url-analyzer">URL Analyzer</a>
+                <a class="nav-link active" href="/email-analyzer">Email Analyzer</a>
+                <a class="nav-link" href="/history">Analysis History</a>
+                <a class="nav-link" href="/methodology">Methodology</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <span class="status-dot"></span>
+                Development Mode
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <p>Security Operations / Email Analyzer</p>
+                <span class="system-status">● SYSTEM ONLINE</span>
+            </header>
+
+            <section class="page-heading">
+                <p class="eyebrow">MESSAGE INVESTIGATION</p>
+                <h1>Email Analyzer</h1>
+                <p>Inspect email text for common phishing indicators.</p>
+            </section>
+
+            <section class="panel analyzer-panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Analyze Email Content</h2>
+                        <p>Paste the relevant message text below.</p>
+                    </div>
+                </div>
+
+                <form id="email-form">
+                    <label for="email-input">Email content</label>
+
+                    <textarea
+                        id="email-input"
+                        name="email"
+                        maxlength="20000"
+                        rows="10"
+                        placeholder="Subject: Account notification&#10;&#10;Paste email content here..."
+                        required
+                    ></textarea>
+
+                    <p class="input-help">
+                        Use sample or sanitized content when possible.
+                        Analysis is performed locally by this application;
+                        the message is not saved by this feature.
+                    </p>
+
+                    <button type="submit" class="action-button primary">
+                        Analyze Email
+                    </button>
+                </form>
+
+                <div id="email-message" class="result-message" role="status" hidden></div>
+            </section>
+
+            <section class="panel">
+                <h2>Detection Method</h2>
+                <p class="method-description">
+                    PhishGuard checks for configured patterns involving urgent
+                    language, credential requests, financial requests, and URLs.
+                </p>
+                <p class="method-description">
+                    These patterns can appear in legitimate messages too.
+                    Results are heuristic indicators, not a definitive verdict.
+                </p>
+            </section>
+
+            <footer class="footer">
+                PhishGuard · Educational cybersecurity project
+            </footer>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

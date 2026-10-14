@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard | Analysis History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+</head>
+<body>
+    <div class="app-layout">
+
+        <aside class="sidebar">
+            <a class="brand" href="/">
+                Phish<span>Guard</span>
+            </a>
+
+            <p class="nav-label">WORKSPACE</p>
+
+            <nav class="navigation">
+                <a class="nav-link" href="/">Dashboard</a>
+                <a class="nav-link" href="/url-analyzer">URL Analyzer</a>
+                <a class="nav-link" href="/email-analyzer">Email Analyzer</a>
+                <a class="nav-link active" href="/history">Analysis History</a>
+                <a class="nav-link" href="/methodology">Methodology</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <span class="status-dot"></span>
+                Development Mode
+            </div>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="topbar">
+                <p>Security Operations / Analysis History</p>
+                <span class="system-status">● SYSTEM ONLINE</span>
+            </header>
+
+            <section class="page-heading">
+                <p class="eyebrow">ACTIVITY LOG</p>
+                <h1>Analysis History</h1>
+                <p>Review previous URL and email security analyses.</p>
+            </section>
+
+            <section class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Recent Analyses</h2>
+                        <p>Only analysis metadata is retained.</p>
+                    </div>
+
+                    
+<button
+    class="action-button secondary"
+    id="refresh-history"
+    type="button"
+>
+    <svg
+        class="button-icon"
+        xmlns="http://www.w3.org/2000/svg"
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        aria-hidden="true"
+    >
+        <path d="M20 7v5h-5" />
+        <path d="M4 17v-5h5" />
+        <path d="M5.6 9A7 7 0 0 1 17.3 6.4L20 12" />
+        <path d="M18.4 15A7 7 0 0 1 6.7 17.6L4 12" />
+    </svg>
+    Refresh Records
+</button>
+
+                </div>
+
+                <p id="history-status" role="status">
+                    Loading analysis history...
+                </p>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Type</th>
+                                <th>Date</th>
+                                <th>Risk Score</th>
+                                <th>Severity</th>
+                                <th>Indicators</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="history-table-body"></tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Privacy Notice</h2>
+                        <p>
+                            Analysis history stores metadata, not the submitted
+                            URLs or email bodies.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="footer">
+                PhishGuard · Educational cybersecurity project
+            </footer>
+
+        </main>
+    </div>
+</body>
+</html>

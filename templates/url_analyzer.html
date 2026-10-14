@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard | URL Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-layout">
+
+        <aside class="sidebar">
+            <a class="brand" href="/">Phish<span>Guard</span></a>
+
+            <p class="nav-label">WORKSPACE</p>
+
+            <nav class="navigation">
+                <a class="nav-link" href="/">Dashboard</a>
+                <a class="nav-link active" href="/url-analyzer">URL Analyzer</a>
+                <a class="nav-link" href="/email-analyzer">Email Analyzer</a>
+                <a class="nav-link" href="/history">Analysis History</a>
+                <a class="nav-link" href="/methodology">Methodology</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <span class="status-dot"></span>
+                Development Mode
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <p>Security Operations / URL Analyzer</p>
+                <span class="system-status">● SYSTEM ONLINE</span>
+            </header>
+
+            <section class="page-heading">
+                <p class="eyebrow">THREAT INVESTIGATION</p>
+                <h1>URL Analyzer</h1>
+                <p>Inspect suspicious web addresses for common phishing indicators.</p>
+            </section>
+
+            <section class="panel analyzer-panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>Analyze a URL</h2>
+                        <p>Enter a web address to prepare it for security analysis.</p>
+                    </div>
+                </div>
+
+                <form id="url-form">
+                    <label for="url-input">Website URL</label>
+
+                    <input
+                        type="text"
+                        id="url-input"
+                        name="url"
+                        placeholder="https://example.com"
+                        maxlength="2048"
+                        autocomplete="off"
+                        required
+                    >
+
+                    <p class="input-help">
+                        Tip: Paste the URL as text. Do not open suspicious links.
+                    </p>
+
+                    <button type="submit" class="action-button primary">
+                        Analyze URL
+                    </button>
+                </form>
+
+                <div id="url-message" class="result-message" role="status" hidden>
+                </div>
+            </section>
+
+            <section class="panel">
+                <h2>What will be checked?</h2>
+                <p class="method-description">
+                    PhishGuard will inspect URL structure for indicators such as
+                    unusual hostname patterns, misleading subdomains, IP-address
+                    hosts, suspicious URL syntax, and other documented rules.
+                </p>
+                <p class="method-description">
+                    These indicators are signals, not proof of malicious activity.
+                    A low score cannot guarantee that a website is safe.
+                </p>
+            </section>
+
+            <footer class="footer">
+                PhishGuard · Educational cybersecurity project
+            </footer>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>

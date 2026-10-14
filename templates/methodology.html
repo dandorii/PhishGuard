@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard | Detection Methodology</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-layout">
+
+        <aside class="sidebar">
+            <a class="brand" href="/">
+                Phish<span>Guard</span>
+            </a>
+
+            <p class="nav-label">WORKSPACE</p>
+
+            <nav class="navigation">
+                <a class="nav-link" href="/">Dashboard</a>
+                <a class="nav-link" href="/url-analyzer">URL Analyzer</a>
+                <a class="nav-link" href="/email-analyzer">Email Analyzer</a>
+                <a class="nav-link" href="/history">Analysis History</a>
+                <a class="nav-link active" href="/methodology">Methodology</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <span class="status-dot"></span>
+                Development Mode
+            </div>
+        </aside>
+
+        <main class="main-content">
+
+            <header class="topbar">
+                <p>Security Operations / Detection Methodology</p>
+                <span class="system-status">● SYSTEM ONLINE</span>
+            </header>
+
+            <section class="page-heading">
+                <p class="eyebrow">DETECTION FRAMEWORK</p>
+                <h1>Detection Methodology</h1>
+                <p>
+                    Understand how PhishGuard evaluates suspicious URLs
+                    and email content using transparent, rule-based analysis.
+                </p>
+            </section>
+
+            <section class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>01 / Analysis Pipeline</h2>
+                        <p>From input validation to risk assessment.</p>
+                    </div>
+                </div>
+
+                <ol>
+                    <li><strong>Input validation:</strong> Check that submitted data is present and within the permitted length.</li>
+                    <li><strong>Rule evaluation:</strong> Inspect the input for predefined suspicious indicators.</li>
+                    <li><strong>Risk scoring:</strong> Add the points assigned to triggered rules and cap the total at 100.</li>
+                    <li><strong>Severity classification:</strong> Map the final score to a severity level.</li>
+                    <li><strong>Result explanation:</strong> Return the score, severity, and triggered indicators.</li>
+                </ol>
+            </section>
+
+            <section class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>02 / URL Detection Rules</h2>
+                        <p>Structural signals that may indicate a suspicious URL.</p>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Indicator</th>
+                                <th>Points</th>
+                                <th>Reason</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Plain HTTP</td>
+                                <td>+15</td>
+                                <td>The URL does not use HTTPS encryption.</td>
+                            </tr>
+                            <tr>
+                                <td>IP address hostname</td>
+                                <td>+25</td>
+                                <td>An IP address is used instead of a conventional domain name.</td>
+                            </tr>
+                            <tr>
+                                <td>@ in URL authority</td>
+                                <td>+20</td>
+                                <td>May create confusion about which host the URL actually targets.</td>
+                            </tr>
+                            <tr>
+                                <td>Long hostname</td>
+                                <td>+10</td>
+                                <td>The hostname exceeds 50 characters.</td>
+                            </tr>
+                            <tr>
+                                <td>Many hostname labels</td>
+                                <td>+15</td>
+                                <td>The hostname contains more than four dot-separated labels.</td>
+                            </tr>
+                            <tr>
+                                <td>Non-ASCII hostname</td>
+                                <td>+20</td>
+                                <td>Internationalized characters can sometimes be used deceptively.</td>
+                            </tr>
+                            <tr>
+                                <td>Punycode hostname</td>
+                                <td>+10</td>
+                                <td>A hostname label starts with the punycode prefix xn--.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>03 / Email Detection Rules</h2>
+                        <p>Language and content patterns associated with phishing attempts.</p>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Indicator</th>
+                                <th>Points</th>
+                                <th>Examples</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Urgency language</td>
+                                <td>+20</td>
+                                <td>Urgent action required; account will be suspended.</td>
+                            </tr>
+                            <tr>
+                                <td>Credential request</td>
+                                <td>+30</td>
+                                <td>Enter your password; verify your credentials.</td>
+                            </tr>
+                            <tr>
+                                <td>Financial request</td>
+                                <td>+25</td>
+                                <td>Wire transfer; send gift cards; payment details.</td>
+                            </tr>
+                            <tr>
+                                <td>URL in email</td>
+                                <td>+10</td>
+                                <td>The email contains an HTTP or HTTPS URL.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>04 / Severity Classification</h2>
+                        <p>Risk levels assigned using the final score.</p>
+                    </div>
+                </div>
+
+                <div class="table-wrapper">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Score</th>
+                                <th>Severity</th>
+                                <th>Interpretation</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>0–29</td>
+                                <td><span class="risk low">Low</span></td>
+                                <td>Few or no indicators were detected.</td>
+                            </tr>
+                            <tr>
+                                <td>30–59</td>
+                                <td><span class="risk medium">Medium</span></td>
+                                <td>Some suspicious indicators were detected.</td>
+                            </tr>
+                            <tr>
+                                <td>60–79</td>
+                                <td><span class="risk high">High</span></td>
+                                <td>Multiple or higher-weight indicators raised concern.</td>
+                            </tr>
+                            <tr>
+                                <td>80–100</td>
+                                <td><span class="risk high">Critical</span></td>
+                                <td>The accumulated score indicates a high level of concern.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section class="panel">
+                <div class="panel-heading">
+                    <div>
+                        <h2>05 / Limitations and Safe Use</h2>
+                    </div>
+                </div>
+
+                <ul>
+                    <li>Scores are heuristic indicators, not probabilities that a URL or email is malicious.</li>
+                    <li>Legitimate content can trigger rules, and sophisticated phishing attempts can evade them.</li>
+                    <li>A low score does not prove that a URL or email is safe.</li>
+                    <li>PhishGuard analyzes submitted content locally and does not open or fetch submitted URLs.</li>
+                    <li>Do not submit real passwords, confidential messages, or sensitive personal information.</li>
+                </ul>
+            </section>
+
+            <footer class="footer">
+                PhishGuard · Educational cybersecurity project
+            </footer>
+
+        </main>
+    </div>
+</body>
+</html>
