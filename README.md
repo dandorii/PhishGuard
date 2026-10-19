@@ -345,3 +345,27 @@ Developed as a personal cybersecurity learning and portfolio project by a BS Cyb
 ## 📄 License
 
 No license has been specified yet. Unless a license is added to this repository, the code is not automatically granted an open-source license for reuse or redistribution.
+
+## Getting Started
+
+PhishGuard requires users to authenticate before accessing their private analysis history.
+
+### Accessing PhishGuard
+
+1. **Login:** If you already have an account, visit [`/login`](https://phishguard-ujkh.onrender.com/login) to sign in.
+2. **Register:** If you're a new user, visit [`/register`](https://phishguard-ujkh.onrender.com/register) to create an account.
+3. **Start analyzing:** After signing in, navigate through the dashboard to access the available phishing URL and email analysis tools.
+
+### Authentication Routes
+
+| Route | Description |
+|---|---|
+| `/login` | Sign in to an existing account |
+| `/register` | Create a new account |
+| `/logout` | Sign out of your account |
+
+**Note:** Authentication is required to access protected features. Your analysis history is private to your account.
+
+### Live Application
+
+[Open PhishGuard](https://phishguard-ujkh.onrender.com)
