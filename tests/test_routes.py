@@ -1,4 +1,18 @@
+import pytest
+
 from app import app
+from database import db
+
+
+@pytest.fixture(autouse=True)
+def isolated_database(tmp_path, monkeypatch):
+    """Keep route tests from writing into the app's real database."""
+    monkeypatch.setattr(
+        db,
+        "DB_PATH",
+        tmp_path / "instance" / "test.db",
+    )
+    db.init_db()
 
 
 def test_homepage_loads():
@@ -165,3 +179,29 @@ def test_email_analysis_api_rejects_non_json_request():
 
     assert response.status_code == 400
     assert "error" in response.get_json()
+
+def test_url_analysis_api_rejects_oversized_url():
+    client = app.test_client()
+
+    response = client.post(
+        "/api/analyze/url",
+        json={"url": "https://" + "a" * 2042},
+    )
+
+    assert response.status_code == 400
+    assert response.get_json()["error"] == (
+        "The URL must not exceed 2048 characters."
+    )
+
+def test_email_analysis_api_rejects_oversized_email():
+    client = app.test_client()
+
+    response = client.post(
+        "/api/analyze/email",
+        json={"email": "A" * 50001},
+    )
+
+    assert response.status_code == 400
+    assert response.get_json()["error"] == (
+        "Email content must not exceed 50000 characters."
+    )

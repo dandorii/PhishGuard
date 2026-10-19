@@ -1,39 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PhishGuard | URL Analyzer</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-</head>
-<body>
-    <div class="app-layout">
+{% extends "base.html" %}
+{% set active_page = "url" %}
+{% block title %}PhishGuard | URL Analyzer{% endblock %}
+{% block breadcrumb %}URL Analyzer{% endblock %}
 
-        <aside class="sidebar">
-            <a class="brand" href="/">Phish<span>Guard</span></a>
-
-            <p class="nav-label">WORKSPACE</p>
-
-            <nav class="navigation">
-                <a class="nav-link" href="/">Dashboard</a>
-                <a class="nav-link active" href="/url-analyzer">URL Analyzer</a>
-                <a class="nav-link" href="/email-analyzer">Email Analyzer</a>
-                <a class="nav-link" href="/history">Analysis History</a>
-                <a class="nav-link" href="/methodology">Methodology</a>
-            </nav>
-
-            <div class="sidebar-footer">
-                <span class="status-dot"></span>
-                Development Mode
-            </div>
-        </aside>
-
-        <main class="main-content">
-            <header class="topbar">
-                <p>Security Operations / URL Analyzer</p>
-                <span class="system-status">● SYSTEM ONLINE</span>
-            </header>
-
+{% block content %}
             <section class="page-heading">
                 <p class="eyebrow">THREAT INVESTIGATION</p>
                 <h1>URL Analyzer</h1>
@@ -86,13 +56,4 @@
                     A low score cannot guarantee that a website is safe.
                 </p>
             </section>
-
-            <footer class="footer">
-                PhishGuard · Educational cybersecurity project
-            </footer>
-        </main>
-    </div>
-
-    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
-</body>
-</html>
+{% endblock %}

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="same-origin">
+    <title>PhishGuard | Sign In</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <script src="{{ url_for('static', filename='js/auth.js') }}" defer></script>
+</head>
+<body>
+    <div class="auth-page">
+        <aside class="auth-brand-panel" aria-label="About PhishGuard">
+            <a class="auth-brand" href="/">
+                Phish<span>Guard</span>
+            </a>
+
+            <div class="auth-brand-copy">
+                <p class="eyebrow">PHISHING ANALYSIS</p>
+                <h2>Analyze suspicious links and emails in one place.</h2>
+                <p>
+                    PhishGuard reviews web addresses and email content for
+                    phishing indicators and explains what it found.
+                </p>
+            </div>
+
+            <ul class="auth-brand-points">
+                <li><strong>URL Analyzer</strong> checks web addresses for phishing indicators.</li>
+                <li><strong>Email Analyzer</strong> reviews message content for phishing indicators.</li>
+                <li><strong>Private history</strong> saves signed-in analyses to your account only.</li>
+            </ul>
+        </aside>
+
+        <main class="auth-main">
+            <div class="auth-card">
+                <p class="eyebrow">ACCOUNT AUTHENTICATION</p>
+                <h1>Welcome back</h1>
+                <p class="auth-lead">Sign in to access your private analysis history.</p>
+
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        <div class="auth-alerts">
+                            {% for message in messages %}
+                                <p class="auth-alert" role="alert">{{ message }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+
+                <form method="POST" action="{{ url_for('login') }}" class="auth-form">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <input
+                        type="hidden"
+                        name="next"
+                        value="{{ request.args.get('next', '') }}"
+                    >
+
+                    <div class="auth-field">
+                        <label for="email">Email address</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            autocomplete="email"
+                            maxlength="254"
+                            value="{{ request.form.get('email', '') }}"
+                            required
+                        >
+                    </div>
+
+                    <div class="auth-field">
+                        <label for="password">Password</label>
+                        <div class="auth-input-wrap">
+                            <input
+                                type="password"
+                                id="password"
+                                name="password"
+                                autocomplete="current-password"
+                                maxlength="128"
+                                required
+                            >
+                            <button
+                                type="button"
+                                class="auth-toggle"
+                                data-password-toggle
+                                aria-controls="password"
+                                aria-label="Show password"
+                                aria-pressed="false"
+                                hidden
+                            >Show</button>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="auth-submit">Sign in</button>
+                </form>
+
+                <p class="auth-switch">New to PhishGuard? <a href="{{ url_for('register') }}">Create an account</a></p>
+                <p class="auth-back"><a href="{{ url_for('home') }}">Return to PhishGuard</a></p>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
