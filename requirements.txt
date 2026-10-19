@@ -2,3 +2,7 @@
 Flask
 pytest
 gunicorn
+psycopg[binary]
+python-dotenv
+argon2-cffi
+Flask-WTF
