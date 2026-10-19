@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="same-origin">
+    <title>PhishGuard | Create Account</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <a class="brand" href="/">
+                Phish<span>Guard</span>
+            </a>
+
+            <p class="nav-label">WORKSPACE</p>
+
+            <nav class="navigation">
+                <a class="nav-link" href="/">Dashboard</a>
+                <a class="nav-link" href="/url-analyzer">URL Analyzer</a>
+                <a class="nav-link" href="/email-analyzer">Email Analyzer</a>
+                <a class="nav-link" href="/methodology">Methodology</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <span class="status-dot"></span>
+                Development Mode
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <p>Account Security / Create Account</p>
+                <span class="system-status">SYSTEM ONLINE</span>
+            </header>
+
+            <section class="content-section">
+                <p class="eyebrow">ACCOUNT REGISTRATION</p>
+                <h1>Create your account</h1>
+                <p>Register to keep your analysis history private to your account.</p>
+
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <p role="alert">{{ message }}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <form method="POST" action="{{ url_for('register') }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            autocomplete="email"
+                            maxlength="254"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            autocomplete="new-password"
+                            minlength="12"
+                            maxlength="128"
+                            required
+                        >
+                        <p>Use at least 12 characters.</p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirm_password">Confirm password</label>
+                        <input
+                            type="password"
+                            id="confirm_password"
+                            name="confirm_password"
+                            autocomplete="new-password"
+                            minlength="12"
+                            maxlength="128"
+                            required
+                        >
+                    </div>
+
+                    <button type="submit">Create account</button>
+                </form>
+
+                <p>Already registered? <a href="/login">Sign in</a></p>
+                <p><a href="/">Return to PhishGuard</a></p>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
