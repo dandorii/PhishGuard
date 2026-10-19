@@ -4,3 +4,5 @@ __pycache__/
 .env
 instance/
 *.py[cod]
+
+env.txt

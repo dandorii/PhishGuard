@@ -1,0 +1,93 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="referrer" content="same-origin">
+    <title>PhishGuard | Sign In</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app-layout">
+        <aside class="sidebar">
+            <a class="brand" href="/">
+                Phish<span>Guard</span>
+            </a>
+
+            <p class="nav-label">WORKSPACE</p>
+
+            <nav class="navigation">
+                <a class="nav-link" href="/">Dashboard</a>
+                <a class="nav-link" href="/url-analyzer">URL Analyzer</a>
+                <a class="nav-link" href="/email-analyzer">Email Analyzer</a>
+                <a class="nav-link" href="/methodology">Methodology</a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <span class="status-dot"></span>
+                Development Mode
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="topbar">
+                <p>Account Security / Sign In</p>
+                <span class="system-status">SYSTEM ONLINE</span>
+            </header>
+
+            <section class="content-section">
+                <p class="eyebrow">ACCOUNT AUTHENTICATION</p>
+                <h1>Welcome back</h1>
+                <p>Sign in to access your private analysis history.</p>
+
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                        {% for message in messages %}
+                            <p role="alert">{{ message }}</p>
+                        {% endfor %}
+                    {% endif %}
+                {% endwith %}
+
+                <form method="POST" action="{{ url_for('login') }}">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <input
+                        type="hidden"
+                        name="next"
+                        value="{{ request.args.get('next', '') }}"
+                    >
+
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            autocomplete="email"
+                            maxlength="254"
+                            required
+                        >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input
+                            type="password"
+                            id="password"
+                            name="password"
+                            autocomplete="current-password"
+                            maxlength="128"
+                            required
+                        >
+                    </div>
+
+                    <button type="submit">Sign in</button>
+                </form>
+
+                <p>New to PhishGuard? <a href="{{ url_for('register') }}">Create an account</a></p>
+                <p><a href="/">Return to PhishGuard</a></p>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
